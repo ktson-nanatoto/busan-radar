@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산 청약 레이더</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f4f0; --card: #ffffff; --card2: #faf9f6;
+  --border: #e8e5df; --text: #1a1814; --muted: #8a8680;
+  --accent: #c8520a; --accent2: #1a5c8a;
+  --green: #1a7a4a; --amber: #b87c00; --red: #c0392b;
+  --tag-bg: #ede9e1; --font: 'Noto Sans KR', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; }
+
+header {
+  background: var(--text); color: #f5f4f0;
+  padding: 0 32px; display: flex; align-items: center;
+  justify-content: space-between; height: 56px;
+  position: sticky; top: 0; z-index: 100;
+}
+.header-logo { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; }
+.header-logo span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 12px; }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+.status-dot.ok { background: #34d399; }
+.status-dot.stale { background: var(--amber); }
+.updated-at { font-size: 11px; color: #888; }
+.btn-crawl {
+  padding: 6px 14px; border-radius: 6px; border: 1px solid #444;
+  background: transparent; color: #ccc; font-size: 12px;
+  cursor: pointer; font-family: var(--font); transition: all 0.15s;
+}
+.btn-crawl:hover { background: #333; color: #fff; }
+.btn-crawl:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.hero {
+  background: var(--text); color: #f5f4f0;
+  padding: 36px 32px 44px; position: relative; overflow: hidden;
+}
+.hero::after {
+  content: '부산'; position: absolute; right: 32px; bottom: -20px;
+  font-size: 140px; font-weight: 900; color: rgba(255,255,255,0.03);
+  line-height: 1; pointer-events: none;
+}
+.hero-title { font-size: 26px; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 6px; }
+.hero-sub { font-size: 13px; color: #aaa; margin-bottom: 24px; }
+.region-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+.region-btn {
+  padding: 8px 16px; border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.06); color: #ccc;
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  transition: all 0.2s; font-family: var(--font); position: relative;
+}
+.region-btn:hover { background: rgba(255,255,255,0.12); color: #fff; }
+.region-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.apt-cnt {
+  position: absolute; top: -5px; right: -5px;
+  background: var(--accent); color: #fff;
+  font-size: 9px; font-weight: 700;
+  width: 16px; height: 16px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.region-btn.active .apt-cnt { background: #fff; color: var(--accent); }
+
+.main { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
+.sec-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; }
+.sec-title { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 10px; }
+.sec-title::before { content:''; display:block; width:4px; height:18px; background:var(--accent); border-radius:2px; }
+.sec-sub { font-size: 12px; color: var(--muted); }
+.mb-28 { margin-bottom: 28px; }
+.mb-40 { margin-bottom: 40px; }
+
+.region-summary {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 24px; margin-bottom: 28px;
+  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start;
+}
+.region-summary h2 { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; margin-bottom: 4px; }
+.region-summary p { font-size: 13px; color: var(--muted); }
+.region-stats { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 16px; }
+.region-stat-val { font-size: 22px; font-weight: 700; letter-spacing: -0.03em; }
+.region-stat-label { font-size: 11px; color: var(--muted); margin-top: 1px; }
+.outlook-badge { padding: 8px 16px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+.outlook-up { background: rgba(26,122,74,0.1); color: var(--green); }
+.outlook-flat { background: rgba(184,124,0,0.1); color: var(--amber); }
+
+.apt-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 14px; }
+.apt-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 20px; cursor: pointer; transition: all 0.18s;
+}
+.apt-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+.apt-card.featured { border-top: 3px solid var(--accent); }
+.apt-card-month { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 8px; }
+.apt-card-name { font-size: 15px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 3px; }
+.apt-card-region { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+.apt-card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+.tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 4px; background: var(--tag-bg); color: #666; }
+.tag-hot { background: rgba(200,82,10,0.1); color: var(--accent); }
+.tag-scale { background: rgba(26,92,138,0.1); color: var(--accent2); }
+.apt-card-stats { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 12px; border-top: 1px solid var(--border); }
+.apt-stat-val { font-size: 16px; font-weight: 700; letter-spacing: -0.02em; }
+.apt-stat-label { font-size: 10px; color: var(--muted); }
+.alarm-bar-bg { height: 3px; background: #ede9e1; border-radius: 2px; width: 80px; margin-top: 6px; }
+.alarm-bar-fill { height: 3px; background: var(--accent); border-radius: 2px; }
+
+.analysis-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+.panel { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+.panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 14px; }
+
+.ph-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.ph-year { font-size: 11px; color: var(--muted); width: 36px; flex-shrink: 0; }
+.ph-bar-bg { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; }
+.ph-bar-fill { height: 8px; border-radius: 4px; }
+.ph-bar-fill.up { background: var(--accent); }
+.ph-bar-fill.flat { background: var(--amber); }
+.ph-val { font-size: 12px; font-weight: 700; width: 40px; text-align: right; }
+
+.outlook-item { margin-bottom: 10px; }
+.ol-label { font-size: 11px; color: var(--muted); margin-bottom: 4px; display: flex; justify-content: space-between; }
+.ol-bar-bg { height: 6px; background: var(--bg); border-radius: 3px; }
+.ol-bar-fill { height: 6px; border-radius: 3px; }
+.score-high { background: var(--green); }
+.score-mid  { background: var(--amber); }
+.score-low  { background: var(--red); }
+
+.metric-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.metric-row:last-child { border-bottom: none; }
+.metric-key { font-size: 12px; color: var(--muted); }
+.metric-val { font-size: 12px; font-weight: 700; }
+.metric-val.up { color: var(--accent); }
+.metric-val.stable { color: var(--amber); }
+
+.rec-list { display: flex; flex-direction: column; gap: 8px; }
+.rec-item { padding: 10px 12px; border-radius: 6px; border-left: 3px solid; font-size: 12px; line-height: 1.6; }
+.rec-pos { background: rgba(26,122,74,0.06); border-color: var(--green); color: #1a4a30; }
+.rec-neg { background: rgba(192,57,43,0.06); border-color: var(--red); color: #6a2020; }
+.rec-neu { background: rgba(184,124,0,0.06); border-color: var(--amber); color: #5a4000; }
+
+.timeline-wrap { display: flex; gap: 0; overflow-x: auto; padding-bottom: 8px; }
+.tl-month { flex-shrink: 0; min-width: 130px; border-right: 1px solid var(--border); padding: 0 16px 0 0; margin-right: 16px; }
+.tl-month:last-child { border-right: none; }
+.tl-month-label { font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 2px solid var(--accent); }
+.tl-apt { padding: 7px 10px; background: var(--card2); border: 1px solid var(--border); border-radius: 6px; margin-bottom: 6px; cursor: pointer; transition: all 0.15s; }
+.tl-apt:hover { background: var(--card); }
+.tl-apt-name { font-size: 11px; font-weight: 600; margin-bottom: 2px; }
+.tl-apt-detail { font-size: 10px; color: var(--muted); }
+.tl-apt.hl { border-color: var(--accent); background: rgba(200,82,10,0.05); }
+
+.divider { height: 1px; background: var(--border); margin: 32px 0; }
+.empty { text-align: center; padding: 48px 20px; color: var(--muted); }
+.spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid #444; border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.review-card { padding: 10px 12px; background: var(--card2); border-radius: 6px; border-left: 3px solid var(--border); margin-bottom: 8px; }
+.review-card.pos { border-left-color: var(--green); }
+.review-text { font-size: 12px; line-height: 1.6; }
+.review-meta { font-size: 10px; color: var(--muted); margin-top: 4px; display: flex; justify-content: space-between; }
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: #ccc; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-logo">부산 청약 <span>레이더</span></div>
+  <div class="header-right">
+    <div class="status-dot" id="status-dot"></div>
+    <div class="updated-at" id="updated-at">로딩 중...</div>
+    <button class="btn-crawl" id="btn-crawl" onclick="runCrawler(false)" style="display:none">🔄 빠른 업데이트</button>
+    <button class="btn-crawl" id="btn-crawl-full" onclick="runCrawler(true)" style="display:none">🔄 전체 업데이트</button>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-title">어느 지역을 보고 계신가요?</div>
+  <div class="hero-sub">지역 선택 → 분양 예정 단지 · 관심도 · 가격 · 전망 한번에</div>
+  <div class="region-grid" id="region-grid"></div>
+</div>
+
+<div class="main" id="main"></div>
+
+<script>
+const REGION_META = {
+  "해운대구": { outlook:"up", avg_price:"12~20억", jeonse:"45%",
+    summary:"부산 최고 입지. 마린시티·센텀·해운대 생활권 3중. 고가 시장 견고.",
+    scores:[{l:"입지",s:95},{l:"교통",s:88},{l:"학군",s:85},{l:"개발호재",s:72},{l:"가격메리트",s:35}],
+    trend:[{y:"2022",v:100,p:90},{y:"2023",v:87,p:78,dn:true},{y:"2024",v:95,p:85},{y:"2025",v:108,p:97}],
+    metrics:[{k:"평균 분양가",v:"12~20억",c:"up"},{k:"전세가율",v:"45%",c:"stable"},{k:"미분양 위험",v:"낮음",c:"up"},{k:"거래량",v:"증가세",c:"up"}],
+    recs:[{t:"pos",txt:"광안대교·해변 조망 단지 희소성 지속. 센텀 직장인 수요 탄탄."},{t:"pos",txt:"해운대삼성콘도맨션 재건축 기대감 — 인근 시세 동반 상승 가능성."},{t:"neg",txt:"15억+ 고가 위주. 실수요자 중도금 대출 불가."},{t:"neu",txt:"입주 물량 감소로 당분간 가격 지지 전망."}],
+  },
+  "연제구": { outlook:"up", avg_price:"5~8억", jeonse:"58%",
+    summary:"지하철 1·3호선 교차. 법조타운·교육환경 우수. 중산층 실수요 핵심.",
+    scores:[{l:"입지",s:82},{l:"교통",s:90},{l:"학군",s:88},{l:"개발호재",s:85},{l:"가격메리트",s:68}],
+    trend:[{y:"2022",v:85,p:76},{y:"2023",v:78,p:70,dn:true},{y:"2024",v:85,p:76},{y:"2025",v:95,p:85}],
+    metrics:[{k:"평균 분양가",v:"5~8억",c:"stable"},{k:"전세가율",v:"58%",c:"stable"},{k:"미분양 위험",v:"낮음",c:"up"},{k:"거래량",v:"증가세",c:"up"}],
+    recs:[{t:"pos",txt:"거제역동원로얄듀크(알림 3만명) — 연제구 최대 관심 단지."},{t:"pos",txt:"1·3호선 트리플 역세권. 법원·검찰청 직주근접 수요 안정."},{t:"neg",txt:"거제역동원로얄듀크 시기 미정 — 대기 수요 장기화 가능."}],
+  },
+  "동래구": { outlook:"up", avg_price:"4~7억", jeonse:"60%",
+    summary:"부산 전통 주거 명소. 온천천 생활권, 동래 학군 강세. 재건축 모멘텀 활발.",
+    scores:[{l:"입지",s:80},{l:"교통",s:85},{l:"학군",s:90},{l:"개발호재",s:88},{l:"가격메리트",s:72}],
+    trend:[{y:"2022",v:90,p:81},{y:"2023",v:82,p:74,dn:true},{y:"2024",v:88,p:79},{y:"2025",v:98,p:88}],
+    metrics:[{k:"평균 분양가",v:"4~7억",c:"stable"},{k:"전세가율",v:"60%",c:"stable"},{k:"미분양 위험",v:"낮음",c:"up"},{k:"거래량",v:"보통",c:"stable"}],
+    recs:[{t:"pos",txt:"부산온천2차(11월, 알림 1.4만) — 쌍용건설 시공. 온천동 재개발 핵심."},{t:"pos",txt:"동래사적공원오네뜨(5월) — 사적공원 조망 희소성."},{t:"pos",txt:"동래IC→남해고속도로. 창원 출근도 커버."},{t:"neg",txt:"온천2차 112세대 소규모. 가로주택정비 관리비 주의."}],
+  },
+  "수영구": { outlook:"up", avg_price:"7~15억", jeonse:"48%",
+    summary:"광안리·민락 수변 생활권. 중고가 시장. 알티에로광안 분양 시세 자극 기대.",
+    scores:[{l:"입지",s:88},{l:"교통",s:80},{l:"학군",s:75},{l:"개발호재",s:80},{l:"가격메리트",s:40}],
+    trend:[{y:"2022",v:105,p:94},{y:"2023",v:88,p:79,dn:true},{y:"2024",v:95,p:85},{y:"2025",v:108,p:97}],
+    metrics:[{k:"평균 분양가",v:"7~15억",c:"up"},{k:"전세가율",v:"48%",c:"stable"},{k:"미분양 위험",v:"중간",c:"stable"},{k:"거래량",v:"증가세",c:"up"}],
+    recs:[{t:"pos",txt:"알티에로광안 하이퍼엔드 → 인근 시세 상승 기대감."},{t:"pos",txt:"광안리 해변·수영강 수변 생활. 삶의 질 최상위권."},{t:"neg",txt:"알티에로 22억+ 고가. 중도금 대출 불가."}],
+  },
+  "강서구": { outlook:"flat", avg_price:"3~5억", jeonse:"65%",
+    summary:"에코델타시티 신도시 공급 집중. 물량 과다 우려 vs 개발 기대감 공존.",
+    scores:[{l:"입지",s:60},{l:"교통",s:55},{l:"학군",s:55},{l:"개발호재",s:85},{l:"가격메리트",s:88}],
+    trend:[{y:"2022",v:75,p:67},{y:"2023",v:70,p:63,dn:true},{y:"2024",v:72,p:65},{y:"2025",v:76,p:68}],
+    metrics:[{k:"평균 분양가",v:"3~5억",c:"up"},{k:"전세가율",v:"65%",c:"stable"},{k:"미분양 위험",v:"중간",c:"stable"},{k:"거래량",v:"보통",c:"stable"}],
+    recs:[{t:"pos",txt:"국가산단 조성 완료 시 인구 유입. 5~10년 장기 전망 밝음."},{t:"pos",txt:"3~5억대 — 부산 내 가장 합리적 가격. 가점 낮아도 도전 가능."},{t:"neg",txt:"6·7·9·10월 동시 분양 — 물량 집중. 미분양 위험."},{t:"neg",txt:"현재 인프라 미성숙. 실거주 불편 감수 필요."}],
+  },
+  "부산진구": { outlook:"up", avg_price:"5~9억", jeonse:"56%",
+    summary:"서면 중심 상업·교통 허브. 범천 재개발로 주거지 대변신 중.",
+    scores:[{l:"입지",s:85},{l:"교통",s:92},{l:"학군",s:72},{l:"개발호재",s:88},{l:"가격메리트",s:62}],
+    trend:[{y:"2022",v:88,p:79},{y:"2023",v:80,p:72,dn:true},{y:"2024",v:87,p:78},{y:"2025",v:97,p:87}],
+    metrics:[{k:"평균 분양가",v:"5~9억",c:"up"},{k:"전세가율",v:"56%",c:"stable"},{k:"미분양 위험",v:"낮음",c:"up"},{k:"거래량",v:"증가세",c:"up"}],
+    recs:[{t:"pos",txt:"범천1-1구역(9월, 알림 5천) — 서면 도보권 재개발. 교통 최강."},{t:"pos",txt:"지하철 1·2호선 환승 서면역 초근접."}],
+  },
+  "남구": { outlook:"flat", avg_price:"4~7억", jeonse:"62%",
+    summary:"대연·용호 생활권. 경성대·부경대 학세권. 중저가 실수요 안정적.",
+    scores:[{l:"입지",s:75},{l:"교통",s:78},{l:"학군",s:72},{l:"개발호재",s:65},{l:"가격메리트",s:75}],
+    trend:[{y:"2022",v:82,p:74},{y:"2023",v:77,p:69,dn:true},{y:"2024",v:80,p:72},{y:"2025",v:85,p:76}],
+    metrics:[{k:"평균 분양가",v:"4~7억",c:"stable"},{k:"전세가율",v:"62%",c:"stable"},{k:"미분양 위험",v:"낮음",c:"up"},{k:"거래량",v:"보통",c:"stable"}],
+    recs:[{t:"pos",txt:"문현마루(6월)·문현5차(9월) — 문현금융단지 직주근접."},{t:"neu",txt:"경성대·부경대 학세권 배후 수요. 안정적 흐름."}],
+  },
+  "서구": { outlook:"flat", avg_price:"3~6억", jeonse:"63%",
+    summary:"원도심 재개발 활발. 대신공원·임항선 그린웨이 생활환경 개선 중.",
+    scores:[{l:"입지",s:65},{l:"교통",s:72},{l:"학군",s:60},{l:"개발호재",s:78},{l:"가격메리트",s:82}],
+    trend:[{y:"2022",v:78,p:70},{y:"2023",v:73,p:66,dn:true},{y:"2024",v:77,p:69},{y:"2025",v:84,p:75}],
+    metrics:[{k:"평균 분양가",v:"3~6억",c:"up"},{k:"전세가율",v:"63%",c:"stable"},{k:"미분양 위험",v:"중간",c:"stable"},{k:"거래량",v:"보통",c:"stable"}],
+    recs:[{t:"pos",txt:"대신해모로센트럴2차(7월, 알림 2천) — 대신공원 조망."},{t:"neg",txt:"원도심 낙후 이미지. 학군 비선호."},{t:"neu",txt:"가격 메리트 최상. 실거주 가성비 관점 적합."}],
+  },
+};
+
+let ALL_APTS = [];
+let selectedGu = null;
+const GU_LIST = ["해운대구","연제구","동래구","수영구","강서구","부산진구","남구","서구","동구","북구","기장군","사하구","사상구","금정구"];
+
+async function fetchData() {
+  try {
+    const res = await fetch('data.json');
+    const json = await res.json();
+    ALL_APTS = json.apts || [];
+    const stale = json.updatedAt
+      ? (Date.now() - new Date(json.updatedAt).getTime()) > 86400000
+      : true;
+    document.getElementById('status-dot').className = 'status-dot ' + (stale ? 'stale' : 'ok');
+    updateStatusBar(json.updatedAt, stale);
+  } catch(e) {
+    document.getElementById('updated-at').textContent = '데이터 로드 실패';
+  }
+}
+
+async function checkStatus() {}
+
+function updateStatusBar(updatedAt, stale) {
+  const el = document.getElementById('updated-at');
+  if (!updatedAt) { el.textContent = '데이터 없음'; return; }
+  const d = new Date(updatedAt);
+  el.textContent = `${d.getMonth()+1}/${d.getDate()} ${d.getHours()}:${String(d.getMinutes()).padStart(2,'0')} 기준${stale?' ⚠️':''}`;
+}
+
+async function runCrawler(full) {
+  const btn  = document.getElementById('btn-crawl');
+  const btnF = document.getElementById('btn-crawl-full');
+  btn.disabled = btnF.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>크롤링 중...';
+  try {
+    const res  = await fetch(full ? '/api/crawl' : '/api/crawl?quick=1', { method:'POST' });
+    const json = await res.json();
+    if (json.success) {
+      await fetchData(); initRegions(); if (selectedGu) renderMain();
+    } else {
+      alert('크롤링 실패: ' + (json.error || '알 수 없는 오류'));
+    }
+  } catch(e) {
+    alert('서버 오류: ' + e.message);
+  } finally {
+    btn.disabled = btnF.disabled = false;
+    btn.innerHTML = '🔄 빠른 업데이트';
+  }
+}
+
+function parseGu(regionName) {
+  const m = (regionName||'').match(/부산광역시\s+(\S+구|\S+군)/);
+  return m ? m[1] : '기타';
+}
+function getMonth(apt) {
+  const m = (apt.dateText||'').match(/(\d+)월/);
+  return m ? parseInt(m[1]) : 99;
+}
+
+function initRegions() {
+  const counts = {};
+  ALL_APTS.forEach(a => { const g=parseGu(a.regionName); counts[g]=(counts[g]||0)+1; });
+  document.getElementById('region-grid').innerHTML = GU_LIST.map(gu => {
+    const cnt = counts[gu]||0;
+    return `<button class="region-btn ${selectedGu===gu?'active':''}" onclick="selectGu('${gu}')">
+      ${gu}<span class="apt-cnt" style="${cnt===0?'opacity:0':''}">${cnt}</span>
+    </button>`;
+  }).join('');
+}
+
+function selectGu(gu) {
+  selectedGu = gu;
+  document.querySelectorAll('.region-btn').forEach(b => b.classList.toggle('active', b.textContent.trim().startsWith(gu)));
+  renderMain();
+  setTimeout(() => document.getElementById('main').scrollIntoView({behavior:'smooth'}), 50);
+}
+
+function renderMain() {
+  const el = document.getElementById('main');
+  if (!selectedGu) { el.innerHTML=''; return; }
+  const guApts   = ALL_APTS.filter(a=>parseGu(a.regionName)===selectedGu).sort((a,b)=>getMonth(a)-getMonth(b));
+  const meta     = REGION_META[selectedGu];
+  const maxAlarm = Math.max(...ALL_APTS.map(a=>a.alarmCount||0), 1);
+  const byMonth  = {};
+  ALL_APTS.filter(a=>getMonth(a)!==99).sort((a,b)=>getMonth(a)-getMonth(b)).forEach(a=>{
+    const k=`${getMonth(a)}월`; if(!byMonth[k]) byMonth[k]=[]; byMonth[k].push(a);
+  });
+  const undated = ALL_APTS.filter(a=>getMonth(a)===99);
+
+  el.innerHTML = `
+    ${renderSummary(guApts, meta)}
+    <div class="mb-40">
+      <div class="sec-header">
+        <div class="sec-title">${selectedGu} 분양 예정 단지</div>
+        <span class="sec-sub">${guApts.length}개</span>
+      </div>
+      ${guApts.length
+        ? `<div class="apt-grid">${guApts.map(a=>aptCardHTML(a,maxAlarm)).join('')}</div>`
+        : `<div class="empty">현재 ${selectedGu} 분양 예정 단지가 없습니다.</div>`}
+    </div>
+    ${meta ? renderAnalysis(meta) : ''}
+    <div class="divider"></div>
+    <div class="mb-40">
+      <div class="sec-header mb-28"><div class="sec-title">2026 부산 전체 청약 일정</div></div>
+      <div class="timeline-wrap">
+        ${Object.entries(byMonth).map(([mo,apts])=>`
+          <div class="tl-month">
+            <div class="tl-month-label">${mo}</div>
+            ${apts.map(a=>`
+              <div class="tl-apt ${parseGu(a.regionName)===selectedGu?'hl':''}" onclick="selectGu('${parseGu(a.regionName)}')">
+                <div class="tl-apt-name">${(a.name||'').slice(0,10)}${(a.name||'').length>10?'…':''}</div>
+                <div class="tl-apt-detail">${parseGu(a.regionName)} · 🔔${(a.alarmCount||0).toLocaleString()}</div>
+              </div>`).join('')}
+          </div>`).join('')}
+        ${undated.length ? `
+          <div class="tl-month">
+            <div class="tl-month-label" style="color:var(--muted)">시기미정</div>
+            ${undated.map(a=>`
+              <div class="tl-apt ${parseGu(a.regionName)===selectedGu?'hl':''}" onclick="selectGu('${parseGu(a.regionName)}')">
+                <div class="tl-apt-name">${(a.name||'').slice(0,10)}${(a.name||'').length>10?'…':''}</div>
+                <div class="tl-apt-detail">${parseGu(a.regionName)} · 🔔${(a.alarmCount||0).toLocaleString()}</div>
+              </div>`).join('')}
+          </div>` : ''}
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:8px">※ 주황 테두리 = 선택 지역 · 단지 클릭 시 해당 지역으로 이동</div>
+    </div>`;
+}
+
+function renderSummary(guApts, meta) {
+  if (!meta) return `<div class="region-summary"><div><h2>📍 ${selectedGu}</h2><p>분석 데이터 준비 중입니다.</p></div></div>`;
+  return `
+  <div class="region-summary">
+    <div>
+      <h2>📍 ${selectedGu}</h2>
+      <p>${meta.summary}</p>
+      <div class="region-stats">
+        <div><div class="region-stat-val" style="color:var(--accent)">${guApts.length}개</div><div class="region-stat-label">분양 예정</div></div>
+        <div><div class="region-stat-val" style="color:var(--accent2)">${meta.avg_price}</div><div class="region-stat-label">예상 분양가</div></div>
+        <div><div class="region-stat-val">${meta.jeonse}</div><div class="region-stat-label">전세가율</div></div>
+        <div><div class="region-stat-val" style="color:var(--amber)">${guApts.reduce((s,a)=>s+(a.alarmCount||0),0).toLocaleString()}</div><div class="region-stat-label">구 내 총 알림</div></div>
+      </div>
+    </div>
+    <div><div class="outlook-badge outlook-${meta.outlook}">${meta.outlook==='up'?'↑ 상승 전망':'→ 보합 전망'}</div></div>
+  </div>`;
+}
+
+function renderAnalysis(meta) {
+  return `
+  <div class="mb-40">
+    <div class="sec-header mb-28"><div class="sec-title">${selectedGu} 시장 분석</div></div>
+    <div class="analysis-grid">
+      <div class="panel">
+        <div class="panel-title">가격 지수 추이</div>
+        ${meta.trend.map(p=>`
+          <div class="ph-row">
+            <div class="ph-year">${p.y}</div>
+            <div class="ph-bar-bg"><div class="ph-bar-fill ${p.dn?'flat':'up'}" style="width:${p.p}%"></div></div>
+            <div class="ph-val">${p.v}</div>
+          </div>`).join('')}
+        <div style="font-size:10px;color:var(--muted);margin-top:6px">※ 2022=100 상대지수</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">입지 평가</div>
+        ${meta.scores.map(s=>`
+          <div class="outlook-item">
+            <div class="ol-label"><span>${s.l}</span><span style="font-weight:700">${s.s}</span></div>
+            <div class="ol-bar-bg"><div class="ol-bar-fill ${s.s>=80?'score-high':s.s>=60?'score-mid':'score-low'}" style="width:${s.s}%"></div></div>
+          </div>`).join('')}
+      </div>
+      <div class="panel">
+        <div class="panel-title">주요 지표</div>
+        ${meta.metrics.map(m=>`
+          <div class="metric-row">
+            <span class="metric-key">${m.k}</span>
+            <span class="metric-val ${m.c}">${m.v}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-title">청약 검토 포인트</div>
+      <div class="rec-list">
+        ${meta.recs.map(r=>`
+          <div class="rec-item rec-${r.t}">
+            ${r.t==='pos'?'✅':r.t==='neg'?'⚠️':'📌'} ${r.txt}
+          </div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function aptCardHTML(a, maxAlarm) {
+  const alarm   = a.alarmCount || 0;
+  const view    = a.viewCount  || 0;
+  const month   = getMonth(a);
+  const label   = month===99 ? '시기 미정' : `${month}월 분양예정`;
+  const hot     = alarm > 2000;
+  const pct     = Math.round(alarm/maxAlarm*100);
+  const prices  = a.prices?.length ? a.prices.map(p=>`<span class="tag">${p.pyung} ${p.price}</span>`).join('') : '';
+  const supply  = a['공급규모'] ? `<span class="tag tag-scale">${a['공급규모']}</span>` : '';
+  const builder = a['건설사']   ? `<span class="tag">${a['건설사']}</span>` : '';
+  const reviews = a.recentReviews?.length ? `
+    <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border)">
+      ${a.recentReviews.slice(0,2).map(r=>`
+        <div class="review-card ${r.up>3?'pos':''}">
+          <div class="review-text">${r.content}</div>
+          <div class="review-meta"><span>${r.name}</span><span>👍 ${r.up}</span></div>
+        </div>`).join('')}
+    </div>` : '';
+  return `
+  <div class="apt-card ${hot?'featured':''}" onclick="window.open('https://hogangnono.com/apt/${a.hash}','_blank')">
+    <div class="apt-card-month">${label}</div>
+    <div class="apt-card-name">${a.name}</div>
+    <div class="apt-card-region">📍 ${a.regionName}</div>
+    <div class="apt-card-tags">
+      ${hot?'<span class="tag tag-hot">🔥 인기</span>':''}
+      ${supply}${builder}${prices}
+      ${!prices?'<span class="tag" style="color:var(--muted)">분양가 미공개</span>':''}
+    </div>
+    <div class="apt-card-stats">
+      <div>
+        <div class="apt-stat-val" style="color:var(--accent2)">${alarm.toLocaleString()}</div>
+        <div class="apt-stat-label">관심 알림</div>
+        <div class="alarm-bar-bg"><div class="alarm-bar-fill" style="width:${pct}%"></div></div>
+      </div>
+      <div style="text-align:right">
+        <div class="apt-stat-val">${(view/10000).toFixed(1)}만</div>
+        <div class="apt-stat-label">방문수</div>
+      </div>
+    </div>
+    ${reviews}
+  </div>`;
+}
+
+(async () => {
+  // 로컬 Flask 서버에서는 크롤 버튼 노출
+  if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    document.getElementById('btn-crawl').style.display = '';
+    document.getElementById('btn-crawl-full').style.display = '';
+  }
+  await fetchData();
+  initRegions();
+  selectGu('동래구');
+})();
+</script>
+</body>
+</html>
