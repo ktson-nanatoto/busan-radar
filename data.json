@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-26T23:26:04",
+  "updatedAt": "2026-05-26T14:34:59",
   "apts": [
     {
       "hash": "gwZ7b",
@@ -97,7 +97,49 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "2026-06-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1670631931086,
+      "lng": 129.122097073991,
+      "moveInDates": [
+        "2027년 8월",
+        "2029년 6월",
+        "2026년 6월"
+      ],
+      "reviewCount": 122,
+      "recentReviews": [
+        {
+          "name": "마관광살포",
+          "content": "366세대면 소규모 단지 느낌인데\n프라이빗 강조한듯..ㅎ 그나저나 6월엔 오픈하는거죠??",
+          "up": 0
+        },
+        {
+          "name": "허의성",
+          "content": "배산임수 가능 입지에 초품아, 센텀생활권 가깝고\n대형 평형위주라 희소가치도 있고 솔직히 돈만있으면\n안갈이유가 없긴하겠다 ㅋㅋㅋ",
+          "up": 0
+        },
+        {
+          "name": "7**0",
+          "content": "브역대신평초\nXXX000 평당 3000이 맥시멈이고\n그 이상이면\n남천자이 w\n해운대제니스 우3구역으로 갈듯",
+          "up": 0
+        }
+      ],
+      "news": [
+        {
+          "title": "차별화 설계 갖춘 '알티에로 광안' 6월 공급 예정",
+          "press": "헤럴드경제",
+          "url": "https://n.news.naver.com/mnews/article/016/0002647195"
+        },
+        {
+          "title": "6월 분양 시장에 하이엔드 4곳 3294가구.서울·부산·경산 동시 공급",
+          "press": "서울경제",
+          "url": "https://n.news.naver.com/mnews/article/011/0004623596"
+        },
+        {
+          "title": "부산 수영구 민락동 'ALTIERO 광안' 6월 분양 예정",
+          "press": "한국경제",
+          "url": "https://n.news.naver.com/mnews/article/015/0005289594"
+        }
+      ]
     },
     {
       "hash": "gIs59",
@@ -153,7 +195,34 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "2026-09-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1719085341638,
+      "lng": 128.948563729722,
+      "moveInDates": [
+        "2028년 8월",
+        "2029년 5월",
+        "2028년 5월",
+        "2026년 9월"
+      ],
+      "reviewCount": 31,
+      "recentReviews": [
+        {
+          "name": "지킴이",
+          "content": "공사장 펜스치기 시작하네요. 현장 사무실용 컨테이너도 있고요.",
+          "up": 0
+        },
+        {
+          "name": "에코델타시티 실거주",
+          "content": "6블럭 위치가 잘못 표시되었네요.",
+          "up": 1
+        },
+        {
+          "name": "실버상추",
+          "content": "6블럭 금강펜테리움 26년 9월 분양 예정",
+          "up": 2
+        }
+      ],
+      "news": []
     },
     {
       "hash": "fBff2",
@@ -167,7 +236,33 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "2026-09-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1473134465248,
+      "lng": 129.05924810527,
+      "moveInDates": [
+        "2027년 8월",
+        "2028년 5월",
+        "2026년 9월"
+      ],
+      "reviewCount": 57,
+      "recentReviews": [
+        {
+          "name": "뚜루르르",
+          "content": "9월 분양예정 글내려갔는데 9월에 분양안하는건가요??",
+          "up": 0
+        },
+        {
+          "name": "향기나는호래비",
+          "content": "9월 분양  돼있습니다",
+          "up": 1
+        },
+        {
+          "name": "푸른하늘",
+          "content": "일반분양기다리고 있습니다 ^^\n적당한 가격에 분양됐으면 좋겠네요~",
+          "up": 7
+        }
+      ],
+      "news": []
     },
     {
       "hash": "gphdc",
@@ -251,7 +346,34 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "2026-11-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1986215514386,
+      "lng": 129.065193277832,
+      "moveInDates": [
+        "2027년 1월",
+        "2028년 7월",
+        "2026년 11월",
+        "2029년 12월"
+      ],
+      "reviewCount": 58,
+      "recentReviews": [
+        {
+          "name": "정상희",
+          "content": "요즘 여러가지상황으로보아 공정진행에착오가생기지나않을까하는생각이드네요\n입주시기는 맞 출수있나요?",
+          "up": 0
+        },
+        {
+          "name": "롤러코스터",
+          "content": "공작맨션부지로만 사업하나요? \n사업계획엔 3개동 이라는데\n이번 1차분양만봐도 공작맨션땅으로는\n3개동 못지을거 같아서요\n아니면 주변주택 포함인가요",
+          "up": 0
+        },
+        {
+          "name": "행복",
+          "content": "터 닦아보니 생각보다도 엄청 넓군요 ㅎㄷㄷ\n\n기대됩니다 ^^",
+          "up": 4
+        }
+      ],
+      "news": []
     },
     {
       "hash": "gMRf2",
@@ -321,7 +443,33 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "2026-12-31",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1666833502971,
+      "lng": 129.16876188899343,
+      "moveInDates": [
+        "2028년 10월",
+        "2028년 7월",
+        "2026년 9월"
+      ],
+      "reviewCount": 63,
+      "recentReviews": [
+        {
+          "name": "분양가하한제 단속반1",
+          "content": "골프연습장, 헬스장, 입주민회의실, 공동육아 등.\n세대구성, 배치는 참고하시고....",
+          "up": 1
+        },
+        {
+          "name": "호롤로",
+          "content": "여기는 분양 언제쯤 할까요 내년에는 할려나요",
+          "up": 2
+        },
+        {
+          "name": "부동성",
+          "content": "역이 좀 멀긴하지만 초품아생각하면 엄마가 출퇴근때 좀 걸어 다닐께예^^",
+          "up": 5
+        }
+      ],
+      "news": []
     },
     {
       "hash": "fA4af",
@@ -447,7 +595,33 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "9999-12-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1915543631385,
+      "lng": 129.06742941297,
+      "moveInDates": [
+        "2027년 11월",
+        "2026년 8월",
+        "2026년 6월"
+      ],
+      "reviewCount": 105,
+      "recentReviews": [
+        {
+          "name": "유미",
+          "content": "분양가가 얼마나 될까요?\n국평기준 9억 전후?",
+          "up": 2
+        },
+        {
+          "name": "예신",
+          "content": "위치가 조금 애매하지만.. 기대하고 있습니다^^",
+          "up": 3
+        },
+        {
+          "name": " Kang",
+          "content": "살짝 위치가 애매하긴 하지만......",
+          "up": 3
+        }
+      ],
+      "news": []
     },
     {
       "hash": "dMU38",
@@ -461,7 +635,33 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "9999-12-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1666833502971,
+      "lng": 129.16876188899343,
+      "moveInDates": [
+        "2028년 10월",
+        "2028년 7월",
+        "2026년 9월"
+      ],
+      "reviewCount": 79,
+      "recentReviews": [
+        {
+          "name": "하하호호",
+          "content": "대단지 경동타운 기대되네요~",
+          "up": 0
+        },
+        {
+          "name": "Sansung",
+          "content": "축하드립니디 자식들에게 물어보세요 \n힐스테이트 물려줄까? 리인 물려 줄까?\n즐거운 명절 되셔요",
+          "up": 2
+        },
+        {
+          "name": "언제갈래",
+          "content": "입지 좋지요\n힐스테이트에 설계도 경동4차 피해서 바다뷰 나오게 다시 나오게 한다니 볼만하겠습니다",
+          "up": 3
+        }
+      ],
+      "news": []
     },
     {
       "hash": "em0ca",
@@ -503,7 +703,33 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "9999-12-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1459205441501,
+      "lng": 129.066743786541,
+      "moveInDates": [
+        "2027년 8월",
+        "2026년 6월",
+        "2031년 3월"
+      ],
+      "reviewCount": 19,
+      "recentReviews": [
+        {
+          "name": "하하하하",
+          "content": "포스코 변경했다 들었는데\n분양시기 또 미뤄지나요 ?",
+          "up": 0
+        },
+        {
+          "name": "전포포스코",
+          "content": "여기 시공사 포스코로 변경된다던데 맞나요?\n내년 상반기 PF 및 착공한다고 들었네요",
+          "up": 3
+        },
+        {
+          "name": "구루마미마",
+          "content": "여기 관심있게 보고있는데 지금 진행 상황이 어떻게 되나요? 청약은 언제 예정인가요?",
+          "up": 0
+        }
+      ],
+      "news": []
     },
     {
       "hash": "f8q06",
@@ -517,7 +743,39 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "9999-12-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.2131681497048,
+      "lng": 129.107524541959,
+      "moveInDates": [
+        "2030년 2월",
+        "2027년 9월",
+        "2030년 5월"
+      ],
+      "reviewCount": 21,
+      "recentReviews": [
+        {
+          "name": "동래좋아",
+          "content": "효성중공업이 계약해지했다는 기사가 뜨네요\n부산은 입지가 안 좋은 곳은 미분량리스크등 수익성 악화로 갈수록 될만한 입지만 선별 수주하는 방향으로 ",
+          "up": 4
+        },
+        {
+          "name": "윤영준",
+          "content": "건설사 변경이후 다른 정보가 없네요?",
+          "up": 0
+        },
+        {
+          "name": "sue5354",
+          "content": "여기도 사적공원과 같는 민간특례사업인가요???",
+          "up": 1
+        }
+      ],
+      "news": [
+        {
+          "title": "미분양·PF 부담에 건설사들 저수익 사업 털고 핵심지 집중",
+          "press": "뉴스1",
+          "url": "https://n.news.naver.com/mnews/article/421/0008902513"
+        }
+      ]
     },
     {
       "hash": "f8Jdb",
@@ -573,7 +831,39 @@
       "apt2youId": null,
       "competition": null,
       "offerDate": "9999-12-30",
-      "firstApplyDate": null
+      "firstApplyDate": null,
+      "lat": 35.1420150673392,
+      "lng": 129.107838322896,
+      "moveInDates": [
+        "2028년 4월",
+        "2029년 6월",
+        "2026년 6월"
+      ],
+      "reviewCount": 97,
+      "recentReviews": [
+        {
+          "name": "누룽지",
+          "content": "부산에서 남천동은 이미지나 분위기가 어떤 동네인가요?",
+          "up": 2
+        },
+        {
+          "name": "asdad123",
+          "content": "여기랑 W 중에 뷰가 어디가 더 좋을까요?",
+          "up": 1
+        },
+        {
+          "name": "포케트",
+          "content": "100% 부산대장 확정 누가 뭐래도...멋질것 같습니다",
+          "up": 6
+        }
+      ],
+      "news": [
+        {
+          "title": "삼익비치 재건축, 온라인총회로 속도 낸다 김인환 조합장 연임 '압도적 지지'",
+          "press": "이코노미스트",
+          "url": "https://n.news.naver.com/mnews/article/243/0000096261"
+        }
+      ]
     },
     {
       "hash": "fzT52",
