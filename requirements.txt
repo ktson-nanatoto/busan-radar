@@ -1,0 +1,4 @@
+flask
+requests
+selenium
+python-telegram-bot>=20.0
