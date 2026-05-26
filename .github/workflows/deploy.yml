@@ -1,11 +1,15 @@
-name: Deploy + Telegram 알림
+name: 청약 크롤링 + Pages 배포
 
 on:
+  schedule:
+    # 매일 08:00 KST = UTC 23:00 (전날)
+    - cron: '0 23 * * *'
   push:
     branches: [main]
     paths:
       - 'data.json'
       - 'dashboard.html'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,7 +20,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepare deploy directory
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run crawler
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: python crawler.py --no-detail
+
+      - name: Commit updated data
+        id: commit
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            git commit -m "data: $(date +'%Y-%m-%d' -d '+9 hours') 자동 업데이트"
+            git push
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Prepare deploy
         run: |
           mkdir deploy
           cp dashboard.html deploy/index.html
@@ -30,6 +60,7 @@ jobs:
           keep_files: false
 
       - name: Send Telegram notification
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || steps.commit.outputs.changed == 'true'
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
