@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy + Telegram 알림
 
 on:
   push:
@@ -28,3 +28,45 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./deploy
           keep_files: false
+
+      - name: Send Telegram notification
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python3 << 'EOF'
+          import json, os, requests
+          from pathlib import Path
+
+          data = json.loads(Path("data.json").read_text(encoding="utf-8"))
+          apts = data.get("apts", [])
+          updated = (data.get("updatedAt") or "")[:10]
+
+          active = [a for a in apts if a.get("status") in (1, 2)]
+          active.sort(key=lambda a: (0 if a.get("status") == 2 else 1, a.get("firstApplyDate") or "9999"))
+          top = active[:5]
+
+          def status_label(s):
+              return {1: "예정", 2: "접수중", 3: "당첨발표", 4: "완료"}.get(s, "-")
+
+          lines = [f"🏠 <b>부산 청약 현황 업데이트</b>  ({updated} 기준)\n"]
+          for apt in top:
+              badge = "🔴" if apt.get("status") == 2 else "🔵"
+              lines.append(
+                  f"{badge} <b>{apt.get('name', '-')}</b>\n"
+                  f"  {apt.get('regionName', '')} | {status_label(apt.get('status', 0))} | {apt.get('dDayText', '')}\n"
+                  f"  청약일: {apt.get('firstApplyDate') or '미정'}\n"
+              )
+
+          pages_url = "https://ktson-nanatoto.github.io/busan-radar/"
+          lines.append(f"🔗 <a href='{pages_url}'>전체 보기</a>")
+
+          token = os.environ["TELEGRAM_BOT_TOKEN"]
+          chat_id = os.environ["TELEGRAM_CHAT_ID"]
+          requests.post(
+              f"https://api.telegram.org/bot{token}/sendMessage",
+              json={"chat_id": chat_id, "text": "\n".join(lines), "parse_mode": "HTML", "disable_web_page_preview": True},
+              timeout=10,
+          ).raise_for_status()
+          print("텔레그램 전송 완료")
+          EOF
