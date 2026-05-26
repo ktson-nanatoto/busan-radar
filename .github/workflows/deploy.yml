@@ -24,12 +24,18 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
       - name: Install dependencies
-        run: pip install requests
+        run: pip install requests selenium
 
       - name: Run crawler
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-        run: python crawler.py --no-detail
+        timeout-minutes: 10
+        run: python crawler.py
 
       - name: Commit updated data
         id: commit
