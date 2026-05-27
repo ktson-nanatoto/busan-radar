@@ -41,16 +41,41 @@ jobs:
         id: commit
         if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
         run: |
+          python3 << 'EOF'
+          import json, os
+          from pathlib import Path
+
+          # viewCount·alarmCount는 매일 바뀌므로 비교에서 제외
+          VOLATILE = {"viewCount", "alarmCount"}
+
+          def canonical(apts):
+              return json.dumps(
+                  sorted(
+                      [{k: v for k, v in a.items() if k not in VOLATILE} for a in apts],
+                      key=lambda a: a.get("hash", "")
+                  ),
+                  ensure_ascii=False, sort_keys=True
+              )
+
+          data = json.loads(Path("data.json").read_text(encoding="utf-8"))
+          sig = canonical(data.get("apts", []))
+
+          sig_file = Path(".apt_signature")
+          prev = sig_file.read_text(encoding="utf-8") if sig_file.exists() else ""
+          changed = sig != prev
+          sig_file.write_text(sig, encoding="utf-8")
+
+          with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+              f.write(f"changed={'true' if changed else 'false'}\n")
+
+          print("의미 있는 변경 감지됨" if changed else "변경 없음 (viewCount 등 제외 기준)")
+          EOF
+
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          if git diff --cached --quiet; then
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            git commit -m "data: $(date +'%Y-%m-%d' -d '+9 hours') 자동 업데이트"
-            git push
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
+          git add data.json .apt_signature
+          git diff --cached --quiet || git commit -m "data: $(date +'%Y-%m-%d' -d '+9 hours') 자동 업데이트"
+          git push || true
 
       - name: Prepare deploy
         run: |
