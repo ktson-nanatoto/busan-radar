@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-06-01T19:25:40",
+  "updatedAt": "2026-06-02T12:54:08",
   "apts": [
     {
       "hash": "gQQf2",
       "name": "해운대마티안디에디션",
       "regionName": "부산광역시 해운대구 중동",
       "viewCount": 26164,
-      "alarmCount": 215,
+      "alarmCount": 216,
       "status": 3,
       "dateText": null,
       "dDayText": null,
@@ -34,7 +34,7 @@
       "name": "동래사적공원오네뜨",
       "regionName": "부산광역시 동래구 명륜동",
       "viewCount": 20597,
-      "alarmCount": 103,
+      "alarmCount": 104,
       "status": 3,
       "dateText": "당첨자 발표",
       "dDayText": "D-3",
@@ -62,7 +62,7 @@
       "name": "부산에코델타시티2BL중흥S-클래스",
       "regionName": "부산광역시 강서구 강동동",
       "viewCount": 15173,
-      "alarmCount": 294,
+      "alarmCount": 296,
       "status": 1,
       "dateText": "2026년 6월",
       "dDayText": "분양예정",
@@ -90,7 +90,7 @@
       "name": "알티에로광안",
       "regionName": "부산광역시 수영구 민락동",
       "viewCount": 175505,
-      "alarmCount": 6393,
+      "alarmCount": 6395,
       "status": 1,
       "dateText": "2026년 6월",
       "dDayText": "분양예정",
@@ -101,12 +101,17 @@
       "lat": 35.1670631931086,
       "lng": 129.122097073991,
       "moveInDates": [
-        "2027년 8월",
+        "2026년 6월",
         "2029년 6월",
-        "2026년 6월"
+        "2027년 8월"
       ],
-      "reviewCount": 126,
+      "reviewCount": 127,
       "recentReviews": [
+        {
+          "name": "마관광살포",
+          "content": "서울은 모르겠고 최소 부산에서는 하이퍼엔드 최초아닌가요?\n오픈하면 반응 뜨겁겠네 ㅋㅋㅋ",
+          "up": 0
+        },
         {
           "name": "라인노트",
           "content": "부산하면 또 조망이잖아요ㅎ 여기 조망쪽 극대화 시켰다는 얘기도 보이고 중심 입지는 결국 부동산 시장에서도 우상향보여주니 오래 거주하기도 좋아보이",
@@ -116,14 +121,14 @@
           "name": "호이야비",
           "content": "시끄럽지않고 바로 뒤가 백산인지라 쾌적한 주거환경 돋보이네요 ^^ 단지 주변으로 전부 평지라서 아이들 키우기도 좋아보여요 특히 초 품 아.",
           "up": 1
-        },
-        {
-          "name": "늑대는아우",
-          "content": "광안 해수욕장 도보로 다닐 수 있는 거리네 ㅎㅎ\n수변공원도 가깝구 산책다니긴 좋은듯\n근데 여기 광대뷰는 잘 나오나요??",
-          "up": 0
         }
       ],
       "news": [
+        {
+          "title": "바다·산·강 자연환경 조망 아파트 인기 많네",
+          "press": "매일경제",
+          "url": "https://n.news.naver.com/mnews/article/009/0005688256"
+        },
         {
           "title": "장위·신길·노량진 출격 6월 청약시장 뜨거워진다",
           "press": "데일리안",
@@ -133,11 +138,6 @@
           "title": "6월 아파트 3만126가구 분양.전년 101%",
           "press": "파이낸셜뉴스",
           "url": "https://n.news.naver.com/mnews/article/014/0005528811"
-        },
-        {
-          "title": "부산 민락동 '알티에로 광안' 이달 공급 외",
-          "press": "조선일보",
-          "url": "https://n.news.naver.com/mnews/article/023/0003979489"
         }
       ]
     },
@@ -160,7 +160,7 @@
       "name": "대신해모로센트럴2차",
       "regionName": "부산광역시 서구 서대신동3가",
       "viewCount": 79466,
-      "alarmCount": 2372,
+      "alarmCount": 2374,
       "status": 1,
       "dateText": "2026년 7월",
       "dDayText": "분양예정",
@@ -174,7 +174,7 @@
       "name": "에코델타시티12BL",
       "regionName": "부산광역시 강서구 강동동",
       "viewCount": 54650,
-      "alarmCount": 787,
+      "alarmCount": 788,
       "status": 1,
       "dateText": "2026년 7월",
       "dDayText": "분양예정",
@@ -200,9 +200,9 @@
       "lng": 128.948563729722,
       "moveInDates": [
         "2029년 5월",
-        "2026년 9월",
+        "2028년 5월",
         "2028년 8월",
-        "2028년 5월"
+        "2026년 9월"
       ],
       "reviewCount": 31,
       "recentReviews": [
@@ -229,7 +229,7 @@
       "name": "범천1-1구역",
       "regionName": "부산광역시 부산진구 범천동",
       "viewCount": 169393,
-      "alarmCount": 5162,
+      "alarmCount": 5164,
       "status": 1,
       "dateText": "2026년 9월",
       "dDayText": "분양예정",
@@ -240,9 +240,9 @@
       "lat": 35.1473134465248,
       "lng": 129.05924810527,
       "moveInDates": [
-        "2026년 9월",
         "2027년 8월",
-        "2028년 5월"
+        "2028년 5월",
+        "2026년 9월"
       ],
       "reviewCount": 57,
       "recentReviews": [
@@ -311,7 +311,7 @@
       "name": "부산한양프라자",
       "regionName": "부산광역시 연제구 거제동",
       "viewCount": 12749,
-      "alarmCount": 305,
+      "alarmCount": 306,
       "status": 1,
       "dateText": "2026년 10월",
       "dDayText": "분양예정",
@@ -325,7 +325,7 @@
       "name": "에코델타시티공동주택용지32BL",
       "regionName": "부산광역시 강서구 대저2동",
       "viewCount": 8036,
-      "alarmCount": 152,
+      "alarmCount": 153,
       "status": 1,
       "dateText": "2026년 10월",
       "dDayText": "분양예정",
@@ -339,7 +339,7 @@
       "name": "부산온천2차가로주택정비사업",
       "regionName": "부산광역시 동래구 온천동",
       "viewCount": 307943,
-      "alarmCount": 14146,
+      "alarmCount": 14147,
       "status": 1,
       "dateText": "2026년 11월",
       "dDayText": "분양예정",
@@ -350,10 +350,10 @@
       "lat": 35.1986215514386,
       "lng": 129.065193277832,
       "moveInDates": [
+        "2029년 12월",
         "2026년 11월",
         "2028년 7월",
-        "2027년 1월",
-        "2029년 12월"
+        "2027년 1월"
       ],
       "reviewCount": 58,
       "recentReviews": [
@@ -394,7 +394,7 @@
       "name": "거제2지역주택조합",
       "regionName": "부산광역시 연제구 거제동",
       "viewCount": 34751,
-      "alarmCount": 765,
+      "alarmCount": 766,
       "status": 1,
       "dateText": "2026년 12월",
       "dDayText": "분양예정",
@@ -436,7 +436,7 @@
       "name": "해운대중동동원로얄듀크",
       "regionName": "부산광역시 해운대구 중동",
       "viewCount": 469932,
-      "alarmCount": 31242,
+      "alarmCount": 31243,
       "status": 1,
       "dateText": "2026년",
       "dDayText": "분양예정",
@@ -504,7 +504,7 @@
       "name": "부산명지2지구B11블록예미지",
       "regionName": "부산광역시 강서구 명지동",
       "viewCount": 55137,
-      "alarmCount": 1165,
+      "alarmCount": 1164,
       "status": 1,
       "dateText": "2026년 하반기",
       "dDayText": "분양예정",
@@ -532,7 +532,7 @@
       "name": "래미안마크더스위트",
       "regionName": "부산광역시 동래구 명륜동",
       "viewCount": 61651,
-      "alarmCount": 1360,
+      "alarmCount": 1364,
       "status": 1,
       "dateText": "2026년 하반기",
       "dDayText": "분양예정",
@@ -574,7 +574,7 @@
       "name": "연천시장정비사업",
       "regionName": "부산광역시 연제구 연산동",
       "viewCount": 6079,
-      "alarmCount": 86,
+      "alarmCount": 87,
       "status": 1,
       "dateText": "2026년",
       "dDayText": "분양예정",
@@ -600,8 +600,8 @@
       "lng": 129.06742941297,
       "moveInDates": [
         "2026년 6월",
-        "2027년 11월",
-        "2026년 8월"
+        "2026년 8월",
+        "2027년 11월"
       ],
       "reviewCount": 105,
       "recentReviews": [
@@ -639,8 +639,8 @@
       "lat": 35.1666833502971,
       "lng": 129.16876188899343,
       "moveInDates": [
-        "2028년 10월",
         "2028년 7월",
+        "2028년 10월",
         "2026년 9월"
       ],
       "reviewCount": 79,
@@ -682,7 +682,7 @@
       "name": "부산삼부로얄중흥s클래스",
       "regionName": "부산광역시 부산진구 부암동",
       "viewCount": 99145,
-      "alarmCount": 3366,
+      "alarmCount": 3367,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -707,9 +707,9 @@
       "lat": 35.1459205441501,
       "lng": 129.066743786541,
       "moveInDates": [
+        "2026년 6월",
         "2031년 3월",
-        "2027년 8월",
-        "2026년 6월"
+        "2027년 8월"
       ],
       "reviewCount": 19,
       "recentReviews": [
@@ -747,9 +747,9 @@
       "lat": 35.2131681497048,
       "lng": 129.107524541959,
       "moveInDates": [
-        "2027년 9월",
         "2030년 2월",
-        "2030년 5월"
+        "2030년 5월",
+        "2027년 9월"
       ],
       "reviewCount": 21,
       "recentReviews": [
@@ -824,7 +824,7 @@
       "name": "그랑자이더비치",
       "regionName": "부산광역시 수영구 남천동",
       "viewCount": 407092,
-      "alarmCount": 11826,
+      "alarmCount": 11829,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -835,9 +835,9 @@
       "lat": 35.1420150673392,
       "lng": 129.107838322896,
       "moveInDates": [
+        "2026년 6월",
         "2028년 4월",
-        "2029년 6월",
-        "2026년 6월"
+        "2029년 6월"
       ],
       "reviewCount": 97,
       "recentReviews": [
@@ -1094,7 +1094,7 @@
       "name": "더폴금정",
       "regionName": "부산광역시 금정구 부곡동",
       "viewCount": 40123,
-      "alarmCount": 591,
+      "alarmCount": 592,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1108,7 +1108,7 @@
       "name": "시민공원촉진1구역",
       "regionName": "부산광역시 부산진구 부암동",
       "viewCount": 76707,
-      "alarmCount": 2494,
+      "alarmCount": 2498,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1136,7 +1136,7 @@
       "name": "일광더에스동일스위트",
       "regionName": "부산광역시 기장군 일광읍 이천리",
       "viewCount": 40557,
-      "alarmCount": 968,
+      "alarmCount": 969,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1164,7 +1164,7 @@
       "name": "시민공원촉진3구역",
       "regionName": "부산광역시 부산진구 범전동",
       "viewCount": 92269,
-      "alarmCount": 2695,
+      "alarmCount": 2697,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1276,7 +1276,7 @@
       "name": "시민공원촉진2-1구역",
       "regionName": "부산광역시 부산진구 범전동",
       "viewCount": 35094,
-      "alarmCount": 1176,
+      "alarmCount": 1177,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1290,7 +1290,7 @@
       "name": "괴정5구역재개발",
       "regionName": "부산광역시 사하구 괴정동",
       "viewCount": 13447,
-      "alarmCount": 200,
+      "alarmCount": 201,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
@@ -1318,7 +1318,7 @@
       "name": "연산동자이갤러리",
       "regionName": "부산광역시 연제구 연산동",
       "viewCount": 10908,
-      "alarmCount": 240,
+      "alarmCount": 241,
       "status": 1,
       "dateText": "년미정",
       "dDayText": "분양예정 (분양시기 미정)",
